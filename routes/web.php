@@ -18,3 +18,23 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+#->middleware('auth')#
+// Danh sách sách
+Route::get('/book/list', [App\Http\Controllers\BookController::class, 'booklist'])
+    ->middleware('auth')->name("booklist");
+
+// Mở form Thêm sách
+Route::get('/book/create', [App\Http\Controllers\BookController::class, 'bookcreate'])
+    ->middleware('auth')->name("bookcreate");
+
+// Mở form Sửa sách
+Route::get('/book/edit/{id}', [App\Http\Controllers\BookController::class, 'bookedit'])
+    ->middleware('auth')->name("bookedit");
+
+// Lưu dữ liệu (dùng chung cho Thêm và Sửa)
+Route::post('/book/save/{action}', [App\Http\Controllers\BookController::class, 'booksave'])
+    ->middleware('auth')->name("booksave");
+
+// Xóa sách
+Route::post('/book/delete', [App\Http\Controllers\BookController::class, 'bookdelete'])
+    ->middleware('auth')->name("bookdelete");
