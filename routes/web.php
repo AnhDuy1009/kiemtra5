@@ -1,15 +1,31 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+ * Route::get('/', function () {
+ *     return view('welcome');
+ * });
+ * /**
+ */
+Route::get('/', [BookController::class, 'index'])->name('home');
+Route::get('/sach/chitiet/{id}', [App\Http\Controllers\BookController::class, 'chitiet'])->name('book.detail');
+Route::get('/books', [App\Http\Controllers\BookController::class, 'index']);
+Route::get('/books/theloai/{id}', [App\Http\Controllers\BookController::class, 'theloai'])->name('book.category');
+Route::get('/order', [App\Http\Controllers\BookController::class, 'order'])->name('order');
+Route::post('/cart/add', [App\Http\Controllers\BookController::class, 'cartadd'])->name('cartadd');
+Route::post('/filter-books', [App\Http\Controllers\BookController::class, 'filter']);
+Route::post('/order/create', [App\Http\Controllers\BookController::class, 'ordercreate'])->middleware('auth')->name('ordercreate');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Kiểm tra xem có đúng là gọi đến hàm theloai không
+Route::get('/books/theloai/{id}', [BookController::class, 'theloai'])->name('book.category');
+
+// Đường dẫn xử lý khi bấm nút "Thêm vào giỏ hàng"
+Route::get('/cart', function () {
+    return view('books.cart');  // Thêm books. vào đây
+})->name('cart.view');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -17,24 +33,38 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-#->middleware('auth')#
+require __DIR__ . '/auth.php';
+// ->middleware('auth')#
 // Danh sách sách
 Route::get('/book/list', [App\Http\Controllers\BookController::class, 'booklist'])
-    ->middleware('auth')->name("booklist");
+    ->middleware('auth')
+    ->name('booklist');
 
 // Mở form Thêm sách
 Route::get('/book/create', [App\Http\Controllers\BookController::class, 'bookcreate'])
-    ->middleware('auth')->name("bookcreate");
+    ->middleware('auth')
+    ->name('bookcreate');
 
 // Mở form Sửa sách
 Route::get('/book/edit/{id}', [App\Http\Controllers\BookController::class, 'bookedit'])
-    ->middleware('auth')->name("bookedit");
+    ->middleware('auth')
+    ->name('bookedit');
 
 // Lưu dữ liệu (dùng chung cho Thêm và Sửa)
 Route::post('/book/save/{action}', [App\Http\Controllers\BookController::class, 'booksave'])
-    ->middleware('auth')->name("booksave");
+    ->middleware('auth')
+    ->name('booksave');
 
 // Xóa sách
 Route::post('/book/delete', [App\Http\Controllers\BookController::class, 'bookdelete'])
-    ->middleware('auth')->name("bookdelete");
+    ->middleware('auth')
+    ->name('bookdelete');
+
+// Đường dẫn mở trang Giỏ hàng
+Route::get('/cart', function () {
+    return view('cart');  // Trỏ tới file cart.blade.php bạn vừa tạo lúc nãy
+})->name('cart.view');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
