@@ -5,13 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/','App\Http\Controllers\ViduLayoutController@sach');
-/*
- * Route::get('/', function () {
- *     return view('welcome');
- * });
- * /**
- */
+//Route::get('/','App\Http\Controllers\ViduLayoutController@sach');
 Route::get('/', [BookController::class, 'index'])->name('home');
 Route::get('/sach/chitiet/{id}', [App\Http\Controllers\BookController::class, 'chitiet'])->name('book.detail');
 Route::get('/books', [App\Http\Controllers\BookController::class, 'index']);
