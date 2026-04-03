@@ -7,12 +7,7 @@ use App\Mail\OrderSuccessMail; // Quan trọng: Phải import Class Mail này
 use Illuminate\Support\Facades\Mail; // Quan trọng: Phải import Facade Mail này
 
 
-<<<<<<< HEAD
-
 //Route::get('/','App\Http\Controllers\ViduLayoutController@sach');
-=======
-Route::get('/','App\Http\Controllers\ViduLayoutController@sach');
->>>>>>> 43bee0d5a233b58f4ca6a9bb2b69a10e71312e3e
 Route::get('/', [BookController::class, 'index'])->name('home');
 Route::get('/sach/chitiet/{id}', [App\Http\Controllers\BookController::class, 'chitiet'])->name('book.detail');
 Route::get('/books', [App\Http\Controllers\BookController::class, 'index']);
@@ -36,13 +31,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-<<<<<<< HEAD
-require __DIR__.'/auth.php';
-
-
-
-=======
->>>>>>> 43bee0d5a233b58f4ca6a9bb2b69a10e71312e3e
 Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')
              ->middleware('auth')->name("account");
 Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
@@ -53,8 +41,6 @@ Route::get('/book/filter/{id}', 'App\Http\Controllers\BookController@getBooksByC
     ->name("book.filter");
     // Quản lý danh sách sác
 
-<<<<<<< HEAD
-=======
 // Thêm các route bổ trợ để không bị lỗi tiếp theo
 Route::get('/book/create', 'App\Http\Controllers\BookController@bookcreate')
     ->middleware('auth')
@@ -70,7 +56,6 @@ Route::post('/book/delete', 'App\Http\Controllers\BookController@bookdelete')
 require __DIR__ . '/auth.php';
 // ->middleware('auth')#
 // Danh sách sách
->>>>>>> 43bee0d5a233b58f4ca6a9bb2b69a10e71312e3e
 Route::get('/book/list', [App\Http\Controllers\BookController::class, 'booklist'])
     ->middleware('auth')
     ->name('booklist');
@@ -103,8 +88,6 @@ Route::get('/cart', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-<<<<<<< HEAD
-=======
 
 // --- PHẦN THÊM MỚI ĐỂ TEST 6A ---
 Route::get('/test-6a', function () {
@@ -126,4 +109,3 @@ Route::get('/test-6a', function () {
         return "<h3>Lỗi gửi mail:</h3>" . $e->getMessage();
     }
 });
->>>>>>> 43bee0d5a233b58f4ca6a9bb2b69a10e71312e3e
