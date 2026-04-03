@@ -4,12 +4,8 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-<<<<<<< HEAD
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+
 Route::get('/','App\Http\Controllers\ViduLayoutController@sach');
-=======
 /*
  * Route::get('/', function () {
  *     return view('welcome');
@@ -24,7 +20,6 @@ Route::get('/order', [App\Http\Controllers\BookController::class, 'order'])->nam
 Route::post('/cart/add', [App\Http\Controllers\BookController::class, 'cartadd'])->name('cartadd');
 Route::post('/filter-books', [App\Http\Controllers\BookController::class, 'filter']);
 Route::post('/order/create', [App\Http\Controllers\BookController::class, 'ordercreate'])->middleware('auth')->name('ordercreate');
->>>>>>> 75557b6252d38da23e80d7093137a6aecbb8f630
 
 // Kiểm tra xem có đúng là gọi đến hàm theloai không
 Route::get('/books/theloai/{id}', [BookController::class, 'theloai'])->name('book.category');
@@ -40,7 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-<<<<<<< HEAD
 require __DIR__.'/auth.php';
 
 
@@ -53,27 +47,8 @@ Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccou
 Route::get('/book/filter/{id}', 'App\Http\Controllers\BookController@getBooksByCategory')
     ->middleware('auth')
     ->name("book.filter");
-    // Quản lý danh sách sách
-Route::get('/book/list', 'App\Http\Controllers\BookController@booklist')
-    ->middleware('auth')
-    ->name("booklist"); // Tên này phải khớp tuyệt đối với 
+    // Quản lý danh sách sác
 
-// Thêm các route bổ trợ để không bị lỗi tiếp theo
-Route::get('/book/create', 'App\Http\Controllers\BookController@bookcreate')
-    ->middleware('auth')
-    ->name("bookcreate"); // Khớp với 
-
-Route::get('/book/edit/{id}', 'App\Http\Controllers\BookController@bookedit')
-    ->middleware('auth')
-    ->name("bookedit"); // Khớp với 
-
-Route::post('/book/delete', 'App\Http\Controllers\BookController@bookdelete')
-    ->middleware('auth')
-    ->name("bookdelete"); // Khớp với
-=======
-require __DIR__ . '/auth.php';
-// ->middleware('auth')#
-// Danh sách sách
 Route::get('/book/list', [App\Http\Controllers\BookController::class, 'booklist'])
     ->middleware('auth')
     ->name('booklist');
@@ -106,4 +81,3 @@ Route::get('/cart', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
->>>>>>> 75557b6252d38da23e80d7093137a6aecbb8f630
