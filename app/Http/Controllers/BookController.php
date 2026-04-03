@@ -37,4 +37,16 @@ class BookController extends Controller
         // Trả về view và truyền biến $book sang
         return view("books.chitiet", compact("book"));
     }
+
+    public function getBooksByCategory($id) {
+    // Nếu chọn "Tất cả" (giả sử id = 0), lấy toàn bộ sách
+    if($id == 0) {
+        $books = DB::table("sach")->get();
+    } else {
+        $books = DB::table("sach")->where("the_loai", $id)->get();
+    }
+
+    // Trả về một view phụ chỉ chứa các dòng <tr> của bảng
+    return view("vidusach.partials.book_rows", compact("books"));
+}
 }
