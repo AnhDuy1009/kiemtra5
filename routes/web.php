@@ -3,19 +3,11 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Mail\OrderSuccessMail; // Quan trọng: Phải import Class Mail này
+use Illuminate\Support\Facades\Mail; // Quan trọng: Phải import Facade Mail này
 
-<<<<<<< HEAD
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+
 Route::get('/','App\Http\Controllers\ViduLayoutController@sach');
-=======
-/*
- * Route::get('/', function () {
- *     return view('welcome');
- * });
- * /**
- */
 Route::get('/', [BookController::class, 'index'])->name('home');
 Route::get('/sach/chitiet/{id}', [App\Http\Controllers\BookController::class, 'chitiet'])->name('book.detail');
 Route::get('/books', [App\Http\Controllers\BookController::class, 'index']);
@@ -24,7 +16,6 @@ Route::get('/order', [App\Http\Controllers\BookController::class, 'order'])->nam
 Route::post('/cart/add', [App\Http\Controllers\BookController::class, 'cartadd'])->name('cartadd');
 Route::post('/filter-books', [App\Http\Controllers\BookController::class, 'filter']);
 Route::post('/order/create', [App\Http\Controllers\BookController::class, 'ordercreate'])->middleware('auth')->name('ordercreate');
->>>>>>> 75557b6252d38da23e80d7093137a6aecbb8f630
 
 // Kiểm tra xem có đúng là gọi đến hàm theloai không
 Route::get('/books/theloai/{id}', [BookController::class, 'theloai'])->name('book.category');
@@ -39,11 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-<<<<<<< HEAD
-require __DIR__.'/auth.php';
-
-
 
 Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')
              ->middleware('auth')->name("account");
@@ -70,7 +56,6 @@ Route::get('/book/edit/{id}', 'App\Http\Controllers\BookController@bookedit')
 Route::post('/book/delete', 'App\Http\Controllers\BookController@bookdelete')
     ->middleware('auth')
     ->name("bookdelete"); // Khớp với
-=======
 require __DIR__ . '/auth.php';
 // ->middleware('auth')#
 // Danh sách sách
@@ -106,4 +91,24 @@ Route::get('/cart', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
->>>>>>> 75557b6252d38da23e80d7093137a6aecbb8f630
+
+// --- PHẦN THÊM MỚI ĐỂ TEST 6A ---
+Route::get('/test-6a', function () {
+    // 1. Giả lập dữ liệu đơn hàng (Mock Data)
+    $order = (object) [
+        'id' => 'DH-' . rand(1000, 9999),
+        'customer_name' => 'Bạn',
+        'total_price' => 500000,
+        'email' => 'phandinhphuc2108@gmail.com' // THAY BẰNG EMAIL CỦA BẠN ĐỂ NHẬN THỬ
+    ];
+
+    try {
+        // 2. Gọi lệnh gửi mail
+        Mail::to($order->email)->send(new OrderSuccessMail($order));
+        
+        return "<h3>Gửi email đặt hàng thành công!</h3><p>Hãy kiểm tra hộp thư: <b>" . $order->email . "</b></p>";
+    } catch (\Exception $e) {
+        // Trả về lỗi nếu cấu hình .env chưa đúng
+        return "<h3>Lỗi gửi mail:</h3>" . $e->getMessage();
+    }
+});
