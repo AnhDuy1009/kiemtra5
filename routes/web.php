@@ -17,8 +17,8 @@ Route::post('/cart/add', [App\Http\Controllers\BookController::class, 'cartadd']
 Route::post('/filter-books', [App\Http\Controllers\BookController::class, 'filter']);
 Route::post('/order/create', [App\Http\Controllers\BookController::class, 'ordercreate'])->middleware('auth')->name('ordercreate');
 
-// Kiểm tra xem có đúng là gọi đến hàm theloai không
-Route::get('/books/theloai/{id}', [BookController::class, 'theloai'])->name('book.category');
+Route::post('/bookview','App\Http\Controllers\BookController@bookview')->name("bookview");
+
 
 // Đường dẫn xử lý khi bấm nút "Thêm vào giỏ hàng"
 Route::get('/cart', function () {

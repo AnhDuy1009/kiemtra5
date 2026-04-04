@@ -62,7 +62,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('sach')}}">Trang chủ</a>
+                <a class="nav-link" href="{{url('/')}}">Trang chủ</a>
             </li>
         </ul>
   </nav>
@@ -87,7 +87,6 @@
       </nav>
 
       <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-md-4 content ">
-        <x-account-panel>
     <div class="container">
         <h2 style="text-align:center; color:#15c; font-weight:bold; margin-top:20px;">
             THÔNG TIN TÀI KHOẢN
@@ -110,7 +109,6 @@
 
         </form>
     </div>
-</x-account-panel>
     </div>
   </div>
 

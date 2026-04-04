@@ -16,6 +16,17 @@ class BookController extends Controller
         return view('books.index', compact('books'));
     }
 
+    public function bookview(Request $request)
+    {
+        $the_loai = $request->input("the_loai");
+        $data = [];
+        if($the_loai!="")
+            $data = DB::select("select * from sach where the_loai = ?",[$the_loai]);
+        else
+            $data = DB::select("select * from sach order by gia_ban asc limit 0,10");
+        return view("vidusach.bookview", compact("data"));
+   }
+
     public function theloai($id)
     {
         // Lấy sách theo thể loại
