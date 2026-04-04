@@ -39,6 +39,20 @@ class BookController extends Controller
         return view('books.chitiet', compact('book'));
     }
 
+<<<<<<< HEAD
+    public function getBooksByCategory($id) {
+    // Nếu chọn "Tất cả" (giả sử id = 0), lấy toàn bộ sách
+    if($id == 0) {
+        $books = DB::table("sach")->get();
+    } else {
+        $books = DB::table("sach")->where("the_loai", $id)->get();
+    }
+
+    // Trả về một view phụ chỉ chứa các dòng <tr> của bảng
+    return view("vidusach.partials.book_rows", compact("books"));
+}
+}
+=======
     public function booklist()
     {
         $data = DB::table('sach')->get();
@@ -265,3 +279,4 @@ class BookController extends Controller
         return view('books.list_raw', compact('books'));
     }
 }
+>>>>>>> 75557b6252d38da23e80d7093137a6aecbb8f630
