@@ -1,29 +1,31 @@
 <x-book-layout>
-    <x-slot name="title">
-        Chi tiết: {{ $book->tieu_de }}
-    </x-slot>
-
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <img src="{{ asset('book_image/' . $book->file_anh_bia) }}" style="max-width: 100%; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+    <div class="row mt-3">
+        <div class="col-md-4 text-center">
+            <img src="{{ asset('image/image/image/' . $book->file_anh_bia) }}" class="img-fluid border shadow-sm">
+        </div>
+        <div class="col-md-8">
+            <h4 class="text-primary font-weight-bold">{{ $book->tieu_de }}</h4>
+            <h5 class="text-danger">Giá bán: {{ number_format($book->gia_ban, 0, ',', '.') }} đ</h5>
+            <hr>
+            <div class="d-flex align-items-center bg-light p-3 rounded mb-3 border">
+                <span class="mr-2">Số lượng mua:</span>
+                <input type="number" id="product-number" value="1" min="1" class="form-control mr-3" style="width: 70px;">
+                <button class="btn btn-success" id="add-to-cart">Thêm vào giỏ hàng</button>
             </div>
-
-            <div class="col-md-8">
-                <h3 class="text-primary">{{ $book->tieu_de }}</h3>
-                <h4 class="text-danger mt-3">Giá bán: {{ number_format($book->gia_ban, 0, ",", ".") }} đ</h4>
-                
-                <hr>
-                
-                <p><b>Mã sách:</b> {{ $book->id }}</p>
-                <p><b>Tác giả:</b> {{ $book->tac_gia ?? 'Đang cập nhật' }}</p>
-                <p><b>Nhà xuất bản:</b> {{ $book->nha_xuat_ban ?? 'Đang cập nhật' }}</p>
-                
-                <h5 class="mt-4"><b>Mô tả nội dung:</b></h5>
-                <p class="text-justify">{!! $book->mo_ta ?? 'Chưa có thông tin mô tả chi tiết cho cuốn sách này.' !!}</p>
-
-                <a href="{{ url('books') }}" class="btn btn-outline-secondary mt-4">⬅ Quay lại danh sách</a>
-            </div>
+            <h6>Mô tả nội dung:</h6>
+            <div class="text-justify">{!! $book->mo_ta !!}</div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#add-to-cart").click(function(){
+            $.post("{{ route('cartadd') }}", {
+                "_token": "{{ csrf_token() }}",
+                "id": "{{$book->id}}", "num": $("#product-number").val()
+            }, function(data){
+                $("#cart-number-product").html(data);
+                alert("Đã thêm thành công!");
+            });
+        });
+    </script>
 </x-book-layout>
